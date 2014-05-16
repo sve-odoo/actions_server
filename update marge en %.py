@@ -1,0 +1,1 @@
+object.write({'x_marge': object.amount_untaxed != 0.0 and (object.margin / object.amount_untaxed * 100) or 0.0 })
