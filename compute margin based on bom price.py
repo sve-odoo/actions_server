@@ -1,3 +1,6 @@
+#Three separate server actions
+
+
 #Sur le SO
 bom_obj = self.pool.get("mrp.bom")
 sol_obj = self.pool.get("sale.order.line")
@@ -22,12 +25,21 @@ computed_margin = (1-(so_total_cost/so_total_price))*100
 object.write({'x_margin':computed_margin})
 
 
+
+
+
+
 #Sur la bom
 total_cost=0.0
 for line in object.bom_lines:
     total_cost = total_cost + line.product_id.standard_price*line.product_qty
 total_cost = total_cost / object.product_qty
 object.write({'x_total_cost':total_cost})
+
+
+
+
+
 
 # sur l'article
 bom_obj = self.pool.get("mrp.bom")
