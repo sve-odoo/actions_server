@@ -1,5 +1,4 @@
-#When customizing the contact form, this server action can be used to actually fill
-#fields in the crm.lead
+#When customizing the contact form, this server action can be used to actually fill fields in the crm.lead
 #This server action should be called by an "on creation" automated action on the "crm.lead" model
 
 #You can just customize the name of the contact form field (label) and the crm.lead field to fill (field_to_fill)
