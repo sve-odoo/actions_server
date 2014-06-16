@@ -6,4 +6,5 @@ self.action_cancel(cr,uid,context['active_ids'],context=context)
 self.action_cancel_draft(cr,uid,context['active_ids'])
 self.write(cr,uid,context['active_ids'],{'internal_number':False},context=context)
 self.unlink(cr,uid,context['active_ids'],context=context)
-self.pool['res.users'].unlink(cr, 1, 1, context=context)
+# Courtesy of mart-e. Uncomment if you really know what you're doing.
+# self.pool['res.users'].unlink(cr, 1, 1, context=context)
