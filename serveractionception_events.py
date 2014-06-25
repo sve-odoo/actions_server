@@ -1,25 +1,25 @@
 #Let's say you want to create a new button on the partner's list view for inviting partner to an event when the event is
 #confirmed. you can create a automated action that would trigger the following server action:
 
-reg_obj = self.pool.get('event.registration');
-event_obj = self.pool.get('event.event');
-partner_obj = self.pool.get('res.partner');
-sa_obj = self.pool.get('ir.actions.server');
+reg_obj = self.pool['event.registration']
+event_obj = self.pool['event.event']
+partner_obj = self.pool['res.partner']
+sa_obj = self.pool['ir.actions.server']
 event_name = "Invite partner to:" + object.name
-mycode = """reg_obj = self.pool.get('event.registration');
-event_obj = self.pool.get('event.event');
-partner_obj = self.pool.get('res.partner');
+mycode = """reg_obj = self.pool['event.registration']
+event_obj = self.pool['event.event']
+partner_obj = self.pool['res.partner']
 for partner_id in context['active_ids']:
-        partner_item = partner_obj.browse(cr,uid,partner_id)
+	partner_item = partner_obj.browse(cr,uid,partner_id)
 	res = {
 	'event_id': """ +str(object.id)+""",
 	'partner_id' : partner_item.id,
 	'name': partner_item.name,
 	'phone':partner_item.phone,
 	'email':partner_item.email,
-        'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""").date_end
+	'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""").date_end
 	}
-        reg_id = reg_obj.create(cr,uid,res,context=context)"""
+	reg_id = reg_obj.create(cr,uid,res,context=context)"""
 
 sa_res = {
     'name': event_name,
