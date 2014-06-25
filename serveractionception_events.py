@@ -11,8 +11,7 @@ for partner in partners:
 	'partner_id' : partner.id,
 	'name': partner.name,
 	'phone':partner.phone,
-	'email':partner.email,
-	'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""",context=context).date_end
+	'email':partner.email
 	}
 	reg_obj.create(cr,uid,vals,context=context)
 """
