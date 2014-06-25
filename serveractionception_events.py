@@ -5,19 +5,20 @@ reg_obj = self.pool['event.registration']
 partner_obj = self.pool['res.partner']
 sa_obj = self.pool['ir.actions.server']
 event_name = "Invite partner to: " + object.name
-mycode = """reg_obj = self.pool['event.registration']
+mycode = """
+reg_obj = self.pool['event.registration']
 event_obj = self.pool['event.event']
-for partner_id in context['active_ids']:
-	partner_item = self.browse(cr,uid,partner_id,context=context)
-	res = {
-	'event_id': """ +str(object.id)+""",
-	'partner_id' : partner_item.id,
-	'name': partner_item.name,
-	'phone':partner_item.phone,
-	'email':partner_item.email,
-	'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""").date_end
+partners = self.browse(cr,uid,context['active_ids'],context=context)
+for partner in partners:
+	vals = {
+	'event_id': """+str(object.id)+""",
+	'partner_id' : partner.id,
+	'name': partner.name,
+	'phone':partner.phone,
+	'email':partner.email,
+	'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""",context=context).date_end
 	}
-	reg_id = reg_obj.create(cr,uid,res,context=context)"""
+	reg_obj.create(cr,uid,vals,context=context)"""
 
 sa_res = {
     'name': event_name,
