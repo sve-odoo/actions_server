@@ -2,15 +2,13 @@
 #confirmed. you can create a automated action that would trigger the following server action:
 
 reg_obj = self.pool['event.registration']
-event_obj = self.pool['event.event']
 partner_obj = self.pool['res.partner']
 sa_obj = self.pool['ir.actions.server']
-event_name = "Invite partner to:" + object.name
+event_name = "Invite partner to: " + object.name
 mycode = """reg_obj = self.pool['event.registration']
 event_obj = self.pool['event.event']
-partner_obj = self.pool['res.partner']
 for partner_id in context['active_ids']:
-	partner_item = partner_obj.browse(cr,uid,partner_id)
+	partner_item = self.browse(cr,uid,partner_id,context=context)
 	res = {
 	'event_id': """ +str(object.id)+""",
 	'partner_id' : partner_item.id,
