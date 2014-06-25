@@ -1,10 +1,6 @@
 #Let's say you want to create a new button on the partner's list view for inviting partner to an event when the event is
 #confirmed. you can create a automated action that would trigger the following server action:
 
-reg_obj = self.pool['event.registration']
-partner_obj = self.pool['res.partner']
-sa_obj = self.pool['ir.actions.server']
-event_name = "Invite partner to: " + object.name
 mycode = """
 reg_obj = self.pool['event.registration']
 event_obj = self.pool['event.event']
@@ -18,11 +14,20 @@ for partner in partners:
 	'email':partner.email,
 	'x_date_event': event_obj.browse(cr,uid,"""+str(object.id)+""",context=context).date_end
 	}
-	reg_obj.create(cr,uid,vals,context=context)"""
+	reg_obj.create(cr,uid,vals,context=context)
+"""
+
+sa_obj = self.pool['ir.actions.server']
+if sa_obj.search(cr,uid,[('code','=',mycode)],context=context):
+	raise Warning("A server action already exists for this event.")
+
+reg_obj = self.pool['event.registration']
+partner_obj = self.pool['res.partner']
+model_obj = self.pool['ir.model']
 
 sa_res = {
-    'name': event_name,
-    'model_id': int(self.pool.get('ir.model').search(cr,uid,[('model','=','res.partner')])[0]),
+    'name': 'Invite partner to: ' + object.name,
+    'model_id': model_obj.search(cr,uid,[('model','=','res.partner')],context=context)[0],
     'state': 'code',
     'code': mycode
 }
