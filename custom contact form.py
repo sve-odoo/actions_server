@@ -12,8 +12,5 @@ if object.description:
 	if label_start != -1:
 		content_start = label_start + len(label) + 2
 		content_end = descr.find('\n',content_start)
-		if content_end == -1:
-		    content = str(descr[content_start:])
-		else:
-		    content = str(descr[content_start:content_end])
+		content = str(descr[content_start:]) if content_end == -1 else str(descr[content_start:content_end])
 		object.write({field_to_fill:content})
