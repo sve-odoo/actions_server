@@ -1,0 +1,1 @@
+self.button_validate(cr,uid,context['active_ids'])
