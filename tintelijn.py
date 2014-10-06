@@ -4,13 +4,13 @@ total_working_hours = 0.0
 for l in object.order_line:
 	# Find bom lines where this product is the finished product
 	if l.product_id:
-		domain = [('product_id','=',l.product_id.id),('bom_id','=',False)]
+		domain = [('product_tmpl_id','=',l.product_id.product_tmpl_id.id)]
 		bom_ids = bom_obj.search(cr,uid,domain,context=context)
 		if bom_ids:
 			bom = bom_obj.browse(cr,uid,bom_ids[0],context=context)
 			total_cost = 0.0
 			working_hours = 0.0
-			for bl in bom.bom_lines:
+			for bl in bom.bom_line_ids:
 				if bl.product_id.type == "service":
 					total_cost += bl.product_qty * bl.product_id.lst_price * object.x_difficulty_so * l.x_difficulty_sol * object.x_transport 
 					working_hours += bl.product_qty * object.x_difficulty_so * l.x_difficulty_sol * l.product_uom_qty
