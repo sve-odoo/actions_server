@@ -1,3 +1,4 @@
+tax_obj = self.pool['account.tax']
 bom_obj = self.pool["mrp.bom"]
 vals_list = []
 total_working_hours = 0.0
@@ -11,11 +12,12 @@ for l in object.order_line:
 			total_cost = 0.0
 			working_hours = 0.0
 			for bl in bom.bom_line_ids:
+				lst_price_without_taxes = tax_obj.compute_all(cr, uid, bl.product_id.taxes_id, bl.product_id.lst_price, 1)['total']
 				if bl.product_id.type == "service":
-					total_cost += bl.product_qty * bl.product_id.lst_price * object.x_difficulty_so * l.x_difficulty_sol * object.x_transport 
+					total_cost += bl.product_qty * lst_price_without_taxes * object.x_difficulty_so * l.x_difficulty_sol * object.x_transport 
 					working_hours += bl.product_qty * object.x_difficulty_so * l.x_difficulty_sol * l.product_uom_qty
 				else:
-					total_cost += bl.product_qty * bl.product_id.lst_price * object.x_transport * l.x_loss_compensation_sol
+					total_cost += bl.product_qty * lst_price_without_taxes * object.x_transport * l.x_loss_compensation_sol
 			total_working_hours += working_hours
 			vals_sol = {
 				'purchase_price': total_cost, 
