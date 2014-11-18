@@ -16,10 +16,9 @@ if object.type == "qweb":
 else:
 	domain.append(('name', '=', object.model))
 
-act_window_obj = self.pool['ir.actions.act_window']
-view_action = act_window_obj.for_xml_id(cr, uid, 'base', 'action_translation', context=context)
-view_action.update({
+action_dict = pool['ir.actions.act_window'].for_xml_id(cr, uid, 'base', 'action_translation', context=context)
+action_dict.update({
 	'domain': domain,
 	'context': ctx
 	})
-action = view_action
+action = action_dict
