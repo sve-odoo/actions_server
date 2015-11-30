@@ -47,4 +47,3 @@ for inv in object.sale_order_id.invoice_ids:
 
 	voucher_id = voucher_obj.create(cr, uid, vals, context=context)
 	voucher_obj.button_proforma_voucher(cr, uid, [voucher_id], context=context)
-
